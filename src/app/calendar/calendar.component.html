@@ -1,0 +1,7 @@
+<div class="calendar">
+    <div *ngFor="let day of [].constructor(24); let i = index;">
+        <div class="day-in-calendar" [routerLink]="shouldBeUnlocked(i + 1 ) ? ['/day', i + 1] : null" [class.locked]="!shouldBeUnlocked(i + 1)">
+            {{i + 1}}
+        </div>
+    </div>
+</div>

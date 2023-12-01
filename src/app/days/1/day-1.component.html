@@ -1,0 +1,7 @@
+<input type="file" #fileInput (change)="readFile(fileInput?.files)" />
+<label class="switch">
+    <input type="checkbox" [(ngModel)]="advanced_mode">
+    <span class="slider round"></span>
+</label>
+<pre style="height: 500px; width: 600px; margin: auto; background-color: black; color: white; overflow: auto;">{{text_to_read}}</pre>
+{{parseFileContent()}}

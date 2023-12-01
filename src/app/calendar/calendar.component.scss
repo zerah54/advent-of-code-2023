@@ -1,0 +1,29 @@
+.calendar {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    > div {
+        width: 100px;
+        aspect-ratio: 1;
+        > div.day-in-calendar {
+            margin: 0.5em;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            border: 1px dashed;
+
+            &:not(.locked) {
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.25);
+                }
+            }
+        }
+    }
+}
