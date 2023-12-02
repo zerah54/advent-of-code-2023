@@ -7,17 +7,19 @@ import { Observable } from 'rxjs';
     selector: 'aoc2023-day-1',
     templateUrl: './day-1.component.html',
     standalone: true,
-    imports: [
-        FormsModule
-    ]
+    imports: [FormsModule]
 })
 export class Day1Component implements OnInit {
     @ViewChild('fileInput') public inputEl!: ElementRef;
 
-    protected readonly default_file_src: string = 'assets/files/day-1.txt';
     protected text_to_read: string = '';
     protected advanced_mode: boolean = true;
-    private mapping: Record<string, string> = {one: '1', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9'}
+    protected readonly default_file_src: string = 'assets/files/day-1.txt';
+
+    private readonly mapping: Record<string, string> = {
+        one: '1', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9',
+        1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9'
+    }
 
     constructor(private http_client: HttpClient) {
     }
@@ -48,15 +50,12 @@ export class Day1Component implements OnInit {
     }
 
     protected parseFileContent(): number {
-        let rows: string[] = this.text_to_read.split('\r\n');
-        rows = rows.map((row: string) => {
-            if (this.advanced_mode) {
-                row = row.replace(/(one|two|three|four|five|six|seven|eight|nine)/gm, (value: string) => this.mapping[value]);
-            }
-            row = row.replace(/\D/gm, '')
-            return row;
+        let number_by_row: string[] = this.text_to_read.split('\r\n').map((row: string): string => {
+            const matches: RegExpMatchArray | null = row.match(this.advanced_mode ? /one|two|three|four|five|six|seven|eight|nine|\d/g : /\d/g);
+            if (!matches || matches.length === 0) return '';
+            return this.mapping[matches[0].toString()] + this.mapping[matches[matches.length - 1].toString()];
         });
-        return rows.reduce((previous_value: number, current_value: string) => +previous_value + (!isNaN(+current_value[0]) ? +(current_value[0] + current_value[current_value.length - 1]) : 0), 0);
+        return number_by_row.reduce((previous_value: number, current_value: string) => +previous_value + +current_value, 0);
     }
 
     private readFileFromUrl(): Observable<string> {

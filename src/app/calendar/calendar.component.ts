@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
     templateUrl: './calendar.component.html',
     styleUrls: ['./calendar.component.scss'],
     standalone: true,
-    imports: [NgForOf, RouterLink]
+    imports: [CommonModule, RouterLink]
 })
 export class CalendarComponent {
 
